@@ -1,6 +1,5 @@
-import type { Binding, Layer, LogicalMap } from "../logical/model";
+import type { LogicalMap } from "../logical/model";
 import type { PhysicalLayout } from "../physical/model";
-import type { TransformChain } from "../transform/model";
 import type { RuntimeState, WorkspaceAction } from "./model";
 import { emptyWorkspace } from "./model";
 

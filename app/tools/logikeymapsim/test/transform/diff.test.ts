@@ -25,7 +25,7 @@ describe("transform diff", () => {
     const target = baseMap("tgt");
     target.bindings = [{ id: "t1", trigger: { type: "press", keyId: "key_b" }, action: { type: "character", value: "A" } }];
 
-    const result = diff(source, target, { physicalLayouts: [], stage });
+    const result = diff(source, target, { chainId: "chain_test", physicalLayouts: [], stage });
     expect(result.operations).toHaveLength(1);
     expect(result.operations[0].kind).toBe("replace");
   });
@@ -36,7 +36,7 @@ describe("transform diff", () => {
     const target = baseMap("tgt");
     target.bindings = [{ id: "t1", trigger: { type: "press", keyId: "key_a" }, action: { type: "character", value: "A" } }];
 
-    const result = diff(source, target, { physicalLayouts: [], stage });
+    const result = diff(source, target, { chainId: "chain_test", physicalLayouts: [], stage });
     expect(result.operations).toHaveLength(0);
   });
 
@@ -45,7 +45,7 @@ describe("transform diff", () => {
     const target = baseMap("tgt");
     target.bindings = [{ id: "t1", trigger: { type: "press", keyId: "key_b" }, action: { type: "character", value: "A" } }];
 
-    const result = diff(source, target, { physicalLayouts: [], stage });
+    const result = diff(source, target, { chainId: "chain_test", physicalLayouts: [], stage });
     expect(result.operations[0].reason).toBe("missingSourceAction");
   });
 
@@ -54,7 +54,7 @@ describe("transform diff", () => {
     source.bindings = [{ id: "s1", trigger: { type: "press", keyId: "key_a" }, action: { type: "character", value: "A" } }];
     const target = baseMap("tgt");
 
-    const result = diff(source, target, { physicalLayouts: [], stage });
+    const result = diff(source, target, { chainId: "chain_test", physicalLayouts: [], stage });
     expect(result.operations[0].reason).toBe("missingTargetAction");
   });
 
@@ -67,7 +67,7 @@ describe("transform diff", () => {
     const target = baseMap("tgt");
     target.bindings = [{ id: "t1", trigger: { type: "press", keyId: "key_c" }, action: { type: "character", value: "A" } }];
 
-    const result = diff(source, target, { physicalLayouts: [], stage });
+    const result = diff(source, target, { chainId: "chain_test", physicalLayouts: [], stage });
     expect(result.operations[0].reason).toBe("ambiguousSourceAction");
   });
 
@@ -77,7 +77,7 @@ describe("transform diff", () => {
     const target = baseMap("tgt");
     target.bindings = [{ id: "t1", trigger: { type: "combo", keyIds: ["key_b", "key_a"] }, action: { type: "character", value: "X" } }];
 
-    const result = diff(source, target, { physicalLayouts: [], stage });
+    const result = diff(source, target, { chainId: "chain_test", physicalLayouts: [], stage });
     expect(result.operations).toHaveLength(0);
   });
 
@@ -87,7 +87,7 @@ describe("transform diff", () => {
     const target = baseMap("tgt");
     target.bindings = [{ id: "t1", trigger: { type: "combo", keyIds: ["key_a", "key_c"] }, action: { type: "character", value: "X" } }];
 
-    const result = diff(source, target, { physicalLayouts: [], stage });
+    const result = diff(source, target, { chainId: "chain_test", physicalLayouts: [], stage });
     expect(result.operations[0].kind).toBe("replace");
   });
 
@@ -97,7 +97,7 @@ describe("transform diff", () => {
     const target = baseMap("tgt");
     target.bindings = [{ id: "t1", trigger: { type: "hold", keyId: "key_a" }, action: { type: "character", value: "X" } }];
 
-    const result = diff(source, target, { physicalLayouts: [], stage });
+    const result = diff(source, target, { chainId: "chain_test", physicalLayouts: [], stage });
     expect(result.operations).toHaveLength(0);
   });
 
@@ -107,7 +107,7 @@ describe("transform diff", () => {
     const target = baseMap("tgt");
     target.bindings = [{ id: "t1", trigger: { type: "hold", keyId: "key_a", durationMs: 300 }, action: { type: "character", value: "X" } }];
 
-    const result = diff(source, target, { physicalLayouts: [], stage });
+    const result = diff(source, target, { chainId: "chain_test", physicalLayouts: [], stage });
     expect(result.operations[0].kind).toBe("replace");
   });
 
@@ -117,7 +117,7 @@ describe("transform diff", () => {
     const target = baseMap("tgt");
     target.bindings = [{ id: "t1", trigger: { type: "press", keyId: "key_a", layerId: "tgt_base" }, action: { type: "character", value: "X" } }];
 
-    const result = diff(source, target, { physicalLayouts: [], stage });
+    const result = diff(source, target, { chainId: "chain_test", physicalLayouts: [], stage });
     expect(result.operations).toHaveLength(0);
   });
 
@@ -127,7 +127,7 @@ describe("transform diff", () => {
     const target = baseMap("tgt");
     target.bindings = [{ id: "t1", trigger: { type: "press", keyId: "key_a" }, action: { type: "layer", mode: "toggle", targetLayerId: "tgt_nav" } }];
 
-    const result = diff(source, target, { physicalLayouts: [], stage });
+    const result = diff(source, target, { chainId: "chain_test", physicalLayouts: [], stage });
     expect(result.operations).toHaveLength(0);
   });
 
@@ -136,7 +136,7 @@ describe("transform diff", () => {
     source.bindings = [{ id: "s1", trigger: { type: "press", keyId: "key_a" }, action: { type: "shortcut", keys: ["Ctrl", "A"] } }];
     const target = baseMap("tgt");
 
-    const result = diff(source, target, { physicalLayouts: [], stage });
+    const result = diff(source, target, { chainId: "chain_test", physicalLayouts: [], stage });
     expect(result.operations[0].reason).toBe("unsupportedAction");
   });
 });

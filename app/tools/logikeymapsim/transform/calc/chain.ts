@@ -16,6 +16,7 @@ export function planChain(chain: TransformChain, maps: LogicalMap[], layouts: Ph
     if (!fromMap || !toMap) continue;
 
     const result = diff(fromMap, toMap, {
+      chainId: chain.id,
       physicalLayouts: layouts,
       stage: {
         index,

@@ -4,6 +4,7 @@ import type { PhysicalLayout } from "../../physical/model";
 import type { BindingRef, TransformOperation, TransformResult, TransformStage } from "../model";
 
 type DiffContext = {
+  chainId: string;
   physicalLayouts: PhysicalLayout[];
   stage: TransformStage;
 };
@@ -130,7 +131,7 @@ export function diff(source: LogicalMap, target: LogicalMap, context: DiffContex
   }
 
   return {
-    chainId: context.stage.fromLogicalMapId,
+    chainId: context.chainId,
     operations,
     warnings: [],
     guides: []

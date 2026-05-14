@@ -1,3 +1,9 @@
+import Link from "next/link";
+
 export default function HomePage() {
-  return <main><a href="/tools/logikeymapsim">LogiKeyMapSim</a></main>;
+  return (
+    <main>
+      <Link href="/tools/logikeymapsim">LogiKeyMapSim</Link>
+    </main>
+  );
 }

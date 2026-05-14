@@ -133,23 +133,31 @@ function parseAction(value: unknown, issues: Issue[], layerIds: Set<string>): Ac
   return null;
 }
 
-function parseLayer(value: unknown, issues: Issue[]): Layer | null {
+type ParsedLayer = {
+  layer: Layer;
+  rawTrigger?: unknown;
+};
+
+function parseLayer(value: unknown, issues: Issue[]): ParsedLayer | null {
   if (!isObj(value)) return null;
   issues.push(...unknownFieldIssues(value, ["id", "name", "kind", "trigger"], "layer"));
   if (idIssue(value.id)) issues.push(issue("error", "id.invalid", "Layer id invalid"));
   if (typeof value.name !== "string") issues.push(issue("error", "layer.invalidName", "Layer name invalid"));
 
   if (value.kind === "base") {
-    return { id: String(value.id), name: String(value.name ?? ""), kind: "base" };
+    return { layer: { id: String(value.id), name: String(value.name ?? ""), kind: "base" } };
   }
 
   if (value.kind === "conditional") {
     if (!value.trigger) issues.push(issue("error", "layer.missingTrigger", "Conditional layer trigger missing"));
     return {
-      id: String(value.id),
-      name: String(value.name ?? ""),
-      kind: "conditional",
-      trigger: { type: "press", keyId: "" }
+      layer: {
+        id: String(value.id),
+        name: String(value.name ?? ""),
+        kind: "conditional",
+        trigger: { type: "press", keyId: "" }
+      },
+      rawTrigger: value.trigger
     };
   }
 
@@ -231,7 +239,8 @@ function parseLogicalMap(value: unknown, issues: Issue[], layouts: PhysicalLayou
   if (!layout) issues.push(issue("error", "logical.missingPhysicalLayout", "Physical layout not found", [String(value.physicalId)]));
 
   const layersRaw = Array.isArray(value.layers) ? value.layers : [];
-  const layers: Layer[] = layersRaw.map((item) => parseLayer(item, issues)).filter((v): v is Layer => v !== null);
+  const parsedLayers = layersRaw.map((item) => parseLayer(item, issues)).filter((v): v is ParsedLayer => v !== null);
+  const layers: Layer[] = parsedLayers.map((item) => item.layer);
 
   const baseCount = layers.filter((it) => it.kind === "base").length;
   if (baseCount !== 1) issues.push(issue("error", "layer.invalidBaseLayerCount", "Base layer count must be exactly one"));
@@ -247,6 +256,13 @@ function parseLogicalMap(value: unknown, issues: Issue[], layouts: PhysicalLayou
   }
 
   const keyIds = new Set(layout?.keys.map((k) => k.id) ?? []);
+  for (const parsed of parsedLayers) {
+    if (parsed.layer.kind !== "conditional") continue;
+    const trigger = parseTrigger(parsed.rawTrigger, issues, keyIds, layerIds);
+    if (trigger) {
+      parsed.layer.trigger = trigger;
+    }
+  }
 
   const bindingsRaw = Array.isArray(value.bindings) ? value.bindings : [];
   const bindings: Binding[] = bindingsRaw
