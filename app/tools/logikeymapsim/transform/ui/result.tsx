@@ -11,8 +11,8 @@ export function TransformResultView({ lines }: Props) {
     <section>
       <h2>Result</h2>
       <ol>
-        {lines.map((line) => (
-          <li key={line}>{line}</li>
+        {lines.map((line, index) => (
+          <li key={`line-${index}`}>{line}</li>
         ))}
       </ol>
     </section>

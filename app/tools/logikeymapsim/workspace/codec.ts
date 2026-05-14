@@ -361,5 +361,5 @@ export function decodeWorkspace(value: unknown): DecodeResult {
 }
 
 export function encodeWorkspace(workspace: Workspace): unknown {
-  return JSON.parse(JSON.stringify(workspace));
+  return workspace;
 }
