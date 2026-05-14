@@ -9,5 +9,5 @@ export function downloadTextFile(filename: string, text: string): void {
   anchor.href = url;
   anchor.download = filename;
   anchor.click();
-  setTimeout(() => URL.revokeObjectURL(url), 0);
+  setTimeout(() => URL.revokeObjectURL(url), 500);
 }
