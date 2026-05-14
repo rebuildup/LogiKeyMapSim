@@ -1,3 +1,76 @@
-import { seedGridLayout } from "../physical/seed";
+import type { PhysicalLayout } from "../physical/model";
 
-export const physicalPresets = [seedGridLayout("Default Grid", 6, 3)];
+export const presets: PhysicalLayout[] = [
+  {
+    id: "preset_phys_60",
+    name: "60% Keyboard",
+    keys: [
+      // Row 0
+      { id: "preset_key_esc", x: 0, y: 0, w: 1, h: 1, note: "ESC" },
+      { id: "preset_key_1", x: 1, y: 0, w: 1, h: 1, note: "1" },
+      { id: "preset_key_2", x: 2, y: 0, w: 1, h: 1, note: "2" },
+      { id: "preset_key_3", x: 3, y: 0, w: 1, h: 1, note: "3" },
+      { id: "preset_key_4", x: 4, y: 0, w: 1, h: 1, note: "4" },
+      { id: "preset_key_5", x: 5, y: 0, w: 1, h: 1, note: "5" },
+      { id: "preset_key_6", x: 6, y: 0, w: 1, h: 1, note: "6" },
+      { id: "preset_key_7", x: 7, y: 0, w: 1, h: 1, note: "7" },
+      { id: "preset_key_8", x: 8, y: 0, w: 1, h: 1, note: "8" },
+      { id: "preset_key_9", x: 9, y: 0, w: 1, h: 1, note: "9" },
+      { id: "preset_key_0", x: 10, y: 0, w: 1, h: 1, note: "0" },
+      { id: "preset_key_minus", x: 11, y: 0, w: 1, h: 1, note: "-" },
+      { id: "preset_key_plus", x: 12, y: 0, w: 1, h: 1, note: "=" },
+      { id: "preset_key_backspace", x: 13, y: 0, w: 2, h: 1, note: "Back" },
+      // Row 1
+      { id: "preset_key_tab", x: 0, y: 1, w: 1.5, h: 1, note: "Tab" },
+      { id: "preset_key_q", x: 1.5, y: 1, w: 1, h: 1, note: "Q" },
+      { id: "preset_key_w", x: 2.5, y: 1, w: 1, h: 1, note: "W" },
+      { id: "preset_key_e", x: 3.5, y: 1, w: 1, h: 1, note: "E" },
+      { id: "preset_key_r", x: 4.5, y: 1, w: 1, h: 1, note: "R" },
+      { id: "preset_key_t", x: 5.5, y: 1, w: 1, h: 1, note: "T" },
+      { id: "preset_key_y", x: 6.5, y: 1, w: 1, h: 1, note: "Y" },
+      { id: "preset_key_u", x: 7.5, y: 1, w: 1, h: 1, note: "U" },
+      { id: "preset_key_i", x: 8.5, y: 1, w: 1, h: 1, note: "I" },
+      { id: "preset_key_o", x: 9.5, y: 1, w: 1, h: 1, note: "O" },
+      { id: "preset_key_p", x: 10.5, y: 1, w: 1, h: 1, note: "P" },
+      { id: "preset_key_lbracket", x: 11.5, y: 1, w: 1, h: 1, note: "[" },
+      { id: "preset_key_rbracket", x: 12.5, y: 1, w: 1, h: 1, note: "]" },
+      { id: "preset_key_backslash", x: 13.5, y: 1, w: 1.5, h: 1, note: "\\" },
+      // Row 2
+      { id: "preset_key_caps", x: 0, y: 2, w: 1.75, h: 1, note: "Caps" },
+      { id: "preset_key_a", x: 1.75, y: 2, w: 1, h: 1, note: "A" },
+      { id: "preset_key_s", x: 2.75, y: 2, w: 1, h: 1, note: "S" },
+      { id: "preset_key_d", x: 3.75, y: 2, w: 1, h: 1, note: "D" },
+      { id: "preset_key_f", x: 4.75, y: 2, w: 1, h: 1, note: "F" },
+      { id: "preset_key_g", x: 5.75, y: 2, w: 1, h: 1, note: "G" },
+      { id: "preset_key_h", x: 6.75, y: 2, w: 1, h: 1, note: "H" },
+      { id: "preset_key_j", x: 7.75, y: 2, w: 1, h: 1, note: "J" },
+      { id: "preset_key_k", x: 8.75, y: 2, w: 1, h: 1, note: "K" },
+      { id: "preset_key_l", x: 9.75, y: 2, w: 1, h: 1, note: "L" },
+      { id: "preset_key_semi", x: 10.75, y: 2, w: 1, h: 1, note: ";" },
+      { id: "preset_key_quote", x: 11.75, y: 2, w: 1, h: 1, note: "'" },
+      { id: "preset_key_enter", x: 12.75, y: 2, w: 2.25, h: 1, note: "Enter" },
+      // Row 3
+      { id: "preset_key_lshift", x: 0, y: 3, w: 2.25, h: 1, note: "Shift" },
+      { id: "preset_key_z", x: 2.25, y: 3, w: 1, h: 1, note: "Z" },
+      { id: "preset_key_x", x: 3.25, y: 3, w: 1, h: 1, note: "X" },
+      { id: "preset_key_c", x: 4.25, y: 3, w: 1, h: 1, note: "C" },
+      { id: "preset_key_v", x: 5.25, y: 3, w: 1, h: 1, note: "V" },
+      { id: "preset_key_b", x: 6.25, y: 3, w: 1, h: 1, note: "B" },
+      { id: "preset_key_n", x: 7.25, y: 3, w: 1, h: 1, note: "N" },
+      { id: "preset_key_m", x: 8.25, y: 3, w: 1, h: 1, note: "M" },
+      { id: "preset_key_comma", x: 9.25, y: 3, w: 1, h: 1, note: "," },
+      { id: "preset_key_dot", x: 10.25, y: 3, w: 1, h: 1, note: "." },
+      { id: "preset_key_slash", x: 11.25, y: 3, w: 1, h: 1, note: "/" },
+      { id: "preset_key_rshift", x: 12.25, y: 3, w: 2.75, h: 1, note: "Shift" },
+      // Row 4
+      { id: "preset_key_lctrl", x: 0, y: 4, w: 1.25, h: 1, note: "Ctrl" },
+      { id: "preset_key_lwin", x: 1.25, y: 4, w: 1.25, h: 1, note: "Win" },
+      { id: "preset_key_lalt", x: 2.5, y: 4, w: 1.25, h: 1, note: "Alt" },
+      { id: "preset_key_space", x: 3.75, y: 4, w: 6.25, h: 1, note: "Space" },
+      { id: "preset_key_ralt", x: 10, y: 4, w: 1.25, h: 1, note: "Alt" },
+      { id: "preset_key_rwin", x: 11.25, y: 4, w: 1.25, h: 1, note: "Win" },
+      { id: "preset_key_menu", x: 12.5, y: 4, w: 1.25, h: 1, note: "Menu" },
+      { id: "preset_key_rctrl", x: 13.75, y: 4, w: 1.25, h: 1, note: "Ctrl" }
+    ]
+  }
+];
