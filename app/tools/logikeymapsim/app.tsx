@@ -11,6 +11,7 @@ import { TransformResultView } from "./transform/ui/result";
 import { WorkspaceLoad } from "./workspace/ui/load";
 import { WorkspaceSave } from "./workspace/ui/save";
 import { EmitPanel } from "./emit/ui/panel";
+import { emitPreview } from "./emit/preview";
 
 const initialState: RuntimeState = {
   workspace: {
@@ -65,6 +66,13 @@ const initialState: RuntimeState = {
 
 export function App() {
   const [state, dispatch] = useReducer(reduceWorkspace, initialState);
+  const previewLines = state.activeResult
+    ? emitPreview({
+        result: state.activeResult,
+        logicalMaps: state.workspace.logicalMaps,
+        physicalLayouts: state.workspace.physicalLayouts
+      }).lines
+    : [];
 
   return (
     <main className="grid gap-8 p-4">
@@ -92,8 +100,12 @@ export function App() {
       <PhysicalEditor state={state} dispatch={dispatch} />
       <LogicalEditor state={state} />
       <TransformEditor state={state} dispatch={dispatch} />
-      <TransformResultView state={state} />
-      <EmitPanel state={state} />
+      <TransformResultView lines={previewLines} />
+      <EmitPanel
+        result={state.activeResult}
+        logicalMaps={state.workspace.logicalMaps}
+        physicalLayouts={state.workspace.physicalLayouts}
+      />
     </main>
   );
 }

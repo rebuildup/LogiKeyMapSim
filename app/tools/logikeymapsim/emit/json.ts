@@ -1,6 +1,5 @@
 import type { Binding, Layer, LogicalMap } from "../logical/model";
-import type { ResolvedBinding, ResolvedTransformResultJson } from "../workspace/model";
-import type { EmitContext } from "./model";
+import type { EmitContext, ResolvedBinding, ResolvedTransformResultJson } from "./model";
 
 function getLayerName(layer: Layer | undefined): string {
   if (!layer) return "base";
@@ -56,8 +55,8 @@ export function emitJson(context: EmitContext): string {
         id: op.id,
         kind: op.kind,
         stage: op.stage,
-        from,
-        to,
+        from: from ?? undefined,
+        to: to ?? undefined,
         reason: op.reason,
         note: op.note
       };

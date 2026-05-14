@@ -1,17 +1,7 @@
 import type { Id } from "../base/id";
-import type {
-  BaseLayerPatch,
-  Binding,
-  BindingActionPatch,
-  BindingTriggerPatch,
-  ConditionalLayerPatch,
-  Layer,
-  LogicalMap,
-  LogicalMapPatch
-} from "../logical/model";
+import type { BaseLayerPatch, Binding, BindingActionPatch, BindingTriggerPatch, ConditionalLayerPatch, Layer, LogicalMap, LogicalMapPatch } from "../logical/model";
 import type { PhysicalKey, PhysicalKeyPatch, PhysicalLayout, PhysicalLayoutPatch } from "../physical/model";
-import type { TransformChain, TransformChainPatch, TransformOperation, TransformResult, TransformStage, ManualReason } from "../transform/model";
-import type { Action, InputTrigger } from "../logical/model";
+import type { TransformChain, TransformChainPatch, TransformResult } from "../transform/model";
 
 export type Workspace = {
   physicalLayouts: PhysicalLayout[];
@@ -22,33 +12,6 @@ export type Workspace = {
 export type RuntimeState = {
   workspace: Workspace;
   activeResult?: TransformResult;
-};
-
-export type ResolvedBinding = {
-  logicalMapId: Id;
-  bindingId: Id;
-  trigger: InputTrigger;
-  action: Action;
-  keyNames: string[];
-  layerName: string;
-};
-
-export type ResolvedTransformOperation = {
-  id: Id;
-  kind: "replace" | "manual";
-  stage: TransformStage;
-  from?: ResolvedBinding;
-  to?: ResolvedBinding;
-  reason?: ManualReason;
-  note?: string;
-};
-
-export type ResolvedTransformResultJson = {
-  kind: "resolved-transform-result";
-  chainId: Id;
-  operations: ResolvedTransformOperation[];
-  warnings: import("../base/issue").Issue[];
-  guides: import("../base/issue").Issue[];
 };
 
 export type WorkspaceAction =
@@ -87,5 +50,3 @@ export const emptyRuntimeState: RuntimeState = {
   workspace: emptyWorkspace,
   activeResult: undefined
 };
-
-export type { TransformOperation };

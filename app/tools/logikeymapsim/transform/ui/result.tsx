@@ -1,16 +1,11 @@
 "use client";
 
-import type { RuntimeState } from "../../workspace/model";
-import { emitPreview } from "../../emit/preview";
+type Props = {
+  lines: string[];
+};
 
-export function TransformResultView({ state }: { state: RuntimeState }) {
-  if (!state.activeResult) return <section><h2>Result</h2><p>No result</p></section>;
-
-  const lines = emitPreview({
-    result: state.activeResult,
-    logicalMaps: state.workspace.logicalMaps,
-    physicalLayouts: state.workspace.physicalLayouts
-  }).lines;
+export function TransformResultView({ lines }: Props) {
+  if (lines.length === 0) return <section><h2>Result</h2><p>No result</p></section>;
 
   return (
     <section>

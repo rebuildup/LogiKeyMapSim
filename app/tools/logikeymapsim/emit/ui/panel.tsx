@@ -1,15 +1,23 @@
 "use client";
 
 import { emitJson } from "../json";
-import type { RuntimeState } from "../../workspace/model";
+import type { LogicalMap } from "../../logical/model";
+import type { PhysicalLayout } from "../../physical/model";
+import type { TransformResult } from "../../transform/model";
 
-export function EmitPanel({ state }: { state: RuntimeState }) {
-  if (!state.activeResult) return <section><h2>Emit</h2><p>No active result</p></section>;
+type Props = {
+  result?: TransformResult;
+  logicalMaps: LogicalMap[];
+  physicalLayouts: PhysicalLayout[];
+};
+
+export function EmitPanel({ result, logicalMaps, physicalLayouts }: Props) {
+  if (!result) return <section><h2>Emit</h2><p>No active result</p></section>;
 
   const json = emitJson({
-    result: state.activeResult,
-    logicalMaps: state.workspace.logicalMaps,
-    physicalLayouts: state.workspace.physicalLayouts
+    result,
+    logicalMaps,
+    physicalLayouts
   });
 
   return (
