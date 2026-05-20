@@ -12,60 +12,30 @@ import { WorkspaceLoad } from "./workspace/ui/load";
 import { WorkspaceSave } from "./workspace/ui/save";
 import { EmitPanel } from "./emit/ui/panel";
 import { emitPreview } from "./emit/preview";
+import { presets as physicalPresets } from "./preset/physical";
+import { presets as logicalPresets } from "./preset/logical";
 
-const initialState: RuntimeState = {
-  workspace: {
-    physicalLayouts: [
-      {
-        id: "phys_default",
-        name: "Default",
-        keys: [
-          { id: "key_a", x: 0, y: 0, w: 1, h: 1, note: "A" },
-          { id: "key_b", x: 1, y: 0, w: 1, h: 1, note: "B" }
-        ]
-      }
-    ],
-    logicalMaps: [
-      {
-        id: "map_source",
-        name: "Source",
-        physicalId: "phys_default",
-        layers: [{ id: "layer_base_src", name: "base", kind: "base" }],
-        bindings: [
-          {
-            id: "bind_src_a",
-            trigger: { type: "press", keyId: "key_a" },
-            action: { type: "character", value: "A" }
-          }
-        ]
-      },
-      {
-        id: "map_target",
-        name: "Target",
-        physicalId: "phys_default",
-        layers: [{ id: "layer_base_tgt", name: "base", kind: "base" }],
-        bindings: [
-          {
-            id: "bind_tgt_a",
-            trigger: { type: "press", keyId: "key_b" },
-            action: { type: "character", value: "A" }
-          }
-        ]
-      }
-    ],
-    transformChains: [
-      {
-        id: "chain_default",
-        name: "Default chain",
-        logicalMapIds: ["map_source", "map_target"]
-      }
-    ]
-  },
-  activeResult: undefined
-};
+function createInitialState(): RuntimeState {
+  const physPreset = physicalPresets[0];
+  const mapPreset = logicalPresets[0];
+  return {
+    workspace: {
+      physicalLayouts: [physPreset],
+      logicalMaps: [mapPreset],
+      transformChains: [
+        {
+          id: createId("chain"),
+          name: "Transform",
+          logicalMapIds: [mapPreset.id]
+        }
+      ]
+    },
+    activeResult: undefined
+  };
+}
 
 export function App() {
-  const [state, dispatch] = useReducer(reduceWorkspace, initialState);
+  const [state, dispatch] = useReducer(reduceWorkspace, createInitialState());
   const previewLines = state.activeResult
     ? emitPreview({
         result: state.activeResult,
@@ -75,9 +45,13 @@ export function App() {
     : [];
 
   return (
-    <main className="grid gap-8 p-4">
-      <h1>LogiKeyMapSim</h1>
-      <section className="flex gap-3">
+    <main className="min-h-screen bg-white text-black p-6">
+      <header className="mb-6">
+        <h1 className="text-xl font-bold">LogiKeyMapSim</h1>
+        <p className="text-sm text-gray-600 mt-1">Logical Key Mapping Simulator</p>
+      </header>
+
+      <div className="flex gap-4 mb-6">
         <WorkspaceLoad dispatch={dispatch} />
         <WorkspaceSave state={state} />
         <button
@@ -87,7 +61,7 @@ export function App() {
               type: "physical/addKey",
               payload: {
                 layoutId: state.workspace.physicalLayouts[0]?.id ?? "",
-                key: { id: createId("key"), x: 2, y: 0, w: 1, h: 1, note: "new" }
+                key: { id: createId("key"), x: 0, y: 5, w: 1, h: 1, note: "?" }
               }
             });
           }}
@@ -95,17 +69,30 @@ export function App() {
         >
           Add key
         </button>
-      </section>
+      </div>
 
-      <PhysicalEditor state={state} dispatch={dispatch} />
-      <LogicalEditor state={state} />
-      <TransformEditor state={state} dispatch={dispatch} />
-      <TransformResultView lines={previewLines} />
-      <EmitPanel
-        result={state.activeResult}
-        logicalMaps={state.workspace.logicalMaps}
-        physicalLayouts={state.workspace.physicalLayouts}
-      />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <PhysicalEditor state={state} dispatch={dispatch} />
+        <LogicalEditor state={state} dispatch={dispatch} />
+      </div>
+
+      <div className="mt-6">
+        <TransformEditor state={state} dispatch={dispatch} />
+      </div>
+
+      {previewLines.length > 0 && (
+        <div className="mt-6">
+          <TransformResultView lines={previewLines} />
+        </div>
+      )}
+
+      <div className="mt-6">
+        <EmitPanel
+          result={state.activeResult}
+          logicalMaps={state.workspace.logicalMaps}
+          physicalLayouts={state.workspace.physicalLayouts}
+        />
+      </div>
     </main>
   );
 }

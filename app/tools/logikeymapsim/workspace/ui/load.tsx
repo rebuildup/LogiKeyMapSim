@@ -7,8 +7,8 @@ import type { WorkspaceAction } from "../model";
 
 export function WorkspaceLoad({ dispatch }: { dispatch: (action: WorkspaceAction) => void }) {
   return (
-    <label>
-      Load workspace JSON
+    <label className="text-sm">
+      <span className="mr-2">Load JSON:</span>
       <input
         type="file"
         accept="application/json"

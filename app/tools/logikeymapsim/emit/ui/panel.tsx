@@ -12,7 +12,7 @@ type Props = {
 };
 
 export function EmitPanel({ result, logicalMaps, physicalLayouts }: Props) {
-  if (!result) return <section><h2>Emit</h2><p>No active result</p></section>;
+  if (!result) return <div className="p-4 border border-gray-300"><h2 className="text-lg font-bold mb-3">Emit</h2><p className="text-sm text-gray-600">No active result</p></div>;
 
   const json = emitJson({
     result,
@@ -21,9 +21,9 @@ export function EmitPanel({ result, logicalMaps, physicalLayouts }: Props) {
   });
 
   return (
-    <section>
-      <h2>Emit</h2>
-      <textarea readOnly value={json} className="h-60 w-full" />
-    </section>
+    <div className="p-4 border border-gray-300">
+      <h2 className="text-lg font-bold mb-3">Emit (Resolved TransformResult JSON)</h2>
+      <textarea readOnly value={json} className="w-full h-60 text-xs p-2 border border-gray-300 font-mono" />
+    </div>
   );
 }

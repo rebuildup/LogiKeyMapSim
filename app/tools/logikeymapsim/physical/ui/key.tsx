@@ -12,8 +12,9 @@ export function PhysicalKeyView({ keyData, onPointerMove }: Props) {
     <button
       type="button"
       aria-label={`physical-key-${keyData.id}`}
-      className="absolute"
+      className="absolute flex items-center justify-center text-xs border border-gray-400 bg-white"
       style={{
+        position: "absolute",
         left: `${keyData.x * 48}px`,
         top: `${keyData.y * 48}px`,
         width: `${keyData.w * 48}px`,

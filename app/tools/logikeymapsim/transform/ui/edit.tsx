@@ -7,21 +7,26 @@ export function TransformEditor({ state, dispatch }: { state: RuntimeState; disp
   const chain = state.workspace.transformChains[0];
 
   return (
-    <section className="grid gap-2">
-      <h2>Transform</h2>
-      <p>{chain ? chain.name : "No chain"}</p>
-      <button
-        type="button"
-        disabled={!chain}
-        onClick={() => {
-          if (!chain) return;
-          const result = planChain(chain, state.workspace.logicalMaps, state.workspace.physicalLayouts);
-          dispatch({ type: "transform/run", payload: { result } });
-        }}
-      >
-        Run transform
-      </button>
-      <button type="button" onClick={() => dispatch({ type: "transform/clearResult" })}>Clear result</button>
-    </section>
+    <div className="p-4 border border-gray-300">
+      <h2 className="text-lg font-bold mb-3">Transform</h2>
+      <p className="text-sm mb-3">{chain ? chain.name : "No chain"}</p>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          disabled={!chain}
+          onClick={() => {
+            if (!chain) return;
+            const result = planChain(chain, state.workspace.logicalMaps, state.workspace.physicalLayouts);
+            dispatch({ type: "transform/run", payload: { result } });
+          }}
+          className="text-sm px-3 py-1 border border-gray-400 disabled:opacity-50"
+        >
+          Run transform
+        </button>
+        <button type="button" onClick={() => dispatch({ type: "transform/clearResult" })} className="text-sm px-3 py-1 border border-gray-400">
+          Clear result
+        </button>
+      </div>
+    </div>
   );
 }

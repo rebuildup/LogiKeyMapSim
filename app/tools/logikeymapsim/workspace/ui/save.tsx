@@ -13,8 +13,9 @@ export function WorkspaceSave({ state }: { state: RuntimeState }) {
         const value = encodeWorkspace(state.workspace);
         downloadTextFile("logikeymapsim-workspace.json", stringifyJson(value));
       }}
+      className="text-sm px-3 py-1 border border-gray-400"
     >
-      Save workspace JSON
+      Save JSON
     </button>
   );
 }
